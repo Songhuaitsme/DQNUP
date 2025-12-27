@@ -1,3 +1,4 @@
+# topology_manager.py
 import networkx as nx
 import config
 from data_loader import DataLoader
@@ -9,10 +10,10 @@ class TopologyManager:
         self._build_graph()
 
     def _build_graph(self):
-        """构建图，初始化带宽状态"""
+        """构建图并初始化带宽状态"""
         self.graph.add_nodes_from(self.data["vertices"])
         for u, v, dist, cap in self.data["edges"]:
-            # 边属性：weight=距离, capacity=总带宽, flow=当前占用
+            # 边属性: weight=距离(用于最短路), capacity=总带宽, flow=当前已用带宽
             self.graph.add_edge(u, v, weight=dist, capacity=cap, flow=0.0)
 
     def get_available_bandwidth(self, u, v) -> float:
@@ -30,17 +31,16 @@ class TopologyManager:
         """释放路径带宽"""
         for i in range(len(path) - 1):
             u, v = path[i], path[i + 1]
-            # 保护性代码，防止减成负数
+            # 保护性计算，防止浮点数误差导致负值
             self.graph[u][v]['flow'] = max(0.0, self.graph[u][v]['flow'] - amount)
 
     def find_constrained_path(self, target_node: int, bandwidth_needed: float) -> list:
         """
-        核心寻路逻辑：
-        1. 寻找从节点0到 target_node 的路径
-        2. 约束：路径上所有边的可用带宽 >= bandwidth_needed
-        3. 优化目标：路径总距离最短
+        核心寻路逻辑 (CSPF - Constrained Shortest Path First):
+        1. 剪枝：仅保留剩余带宽 >= 需求带宽的边。
+        2. 寻路：在剪枝后的图中寻找从节点0到目标的物理距离最短路径。
         """
-        # 1. 剪枝：构建临时图，只包含带宽充足的边
+        # 1. 构建临时子图 (剪枝)
         valid_edges = []
         for u, v, data in self.graph.edges(data=True):
             available = data['capacity'] - data['flow']
@@ -49,7 +49,7 @@ class TopologyManager:
 
         temp_graph = self.graph.edge_subgraph(valid_edges)
 
-        # 2. 在剪枝后的图中找最短路
+        # 2. 最短路径搜索
         try:
             if not temp_graph.has_node(0) or not temp_graph.has_node(target_node):
                 return None
