@@ -1,4 +1,3 @@
-# dqn_agent.py
 import numpy as np
 import tensorflow as tf
 import random
@@ -6,7 +5,6 @@ import os
 import datetime
 from collections import deque
 import config
-
 
 class DQNAgent:
     def __init__(self):

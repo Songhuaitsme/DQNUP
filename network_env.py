@@ -1,4 +1,3 @@
-# network_env.py
 import numpy as np
 import math
 import config

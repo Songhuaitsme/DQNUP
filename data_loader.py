@@ -1,4 +1,3 @@
-# data_loader.py
 import config
 from typing import Dict, List, Tuple
 
@@ -31,7 +30,7 @@ class DataLoader:
         加载12节点拓扑结构
         返回: {'vertices': List, 'edges': List[(u, v, dist, cap)]}
         """
-        # (起点, 终点, 距离/延迟, 总带宽)
+        # (起点, 终点, 距离, 总带宽)
         raw_edges = [
             (0, 1, 110, 2000), (0, 2, 100, 2000), (1, 3, 30, 500),
             (1, 6, 20, 400), (2, 3, 50, 600), (2, 9, 10, 300),
