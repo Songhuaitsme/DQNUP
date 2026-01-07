@@ -1,4 +1,5 @@
 # train.py
+'''并行分配失败率极低'''
 import numpy as np
 import random
 import tensorflow as tf

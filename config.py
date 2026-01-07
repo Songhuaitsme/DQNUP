@@ -1,6 +1,7 @@
 # config.py
 # ================= 拓扑与基础资源配置 =================
 NODE_NUM = 12                # 节点数量 (0号为调度器，1-11为数据中心)
+# NODE_NUM = 34               
 DEFAULT_LINK_BANDWIDTH = 500 # 默认链路总带宽 (Mbps)
 DEFAULT_NODE_CPU = 80        # 默认节点总CPU资源 (单位)
 
@@ -12,7 +13,7 @@ PRICE_BETA = 3.0   # 指数因子 (非线性程度，反映负载对价格的敏
 TASK_GENERATION_PROB = 0.6  # (Legacy) 单任务模式下，每个时间步生成新任务的概率
 
 # 多任务/批处理配置
-ENABLE_BATCH_TASKS = True   # 是否开启批量任务
+ENABLE_BATCH_TASKS = False   # 是否开启批量任务
 MAX_TASKS_PER_STEP = 5      # 限制每个时间步的最大任务数 (防止显存溢出)
 TASK_ARRIVAL_RATE = 2.0     # 泊松分布 Lambda 值 (平均每步到达的任务数)
 
@@ -30,7 +31,7 @@ EPSILON_DECAY = 0.9999     # 探索率衰减系数
 
 BATCH_SIZE = 64
 MEMORY_CAPACITY = 10000
-MAX_STEPS = 10000          # 总训练步数
+MAX_STEPS = 30000          # 总训练步数
 
 # ================= 状态与奖励配置 =================
 # 状态维度: 节点位置(One-hot) + 节点负载 + 任务CPU特征 + 任务带宽特征

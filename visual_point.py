@@ -1,4 +1,10 @@
-# inference.py
+'''#节点分配结果可视化
+1.全节点负载耦合图示
+2.各节点热力图耦合
+3.各节点负载图
+4.所有节点平均负载
+5.切片利用率'''
+
 import numpy as np
 import random
 import matplotlib.pyplot as plt
@@ -149,7 +155,7 @@ def inference():
     # -------------------------------------------------------
     # 改进方案 2: 分离多子图 (Subplots)
     # -------------------------------------------------------
-    '''print("正在生成节点独立利用率图...")
+    print("正在生成节点独立利用率图...")
 
     target_nodes = sorted([n for n in node_usage_history.keys() if n != 0])
     num_nodes = len(target_nodes)
@@ -177,12 +183,12 @@ def inference():
     plt.savefig('node_utilization_subplots.png', dpi=300)
     plt.show()
     print("图表已保存为 node_utilization_subplots.png")
-'''
+
 
     # -------------------------------------------------------
     # 改进方案 3: 集群平均负载与范围 (Mean + Min/Max)
     # -------------------------------------------------------
-    '''print("正在生成集群聚合统计图...")
+    print("正在生成集群聚合统计图...")
 
     target_nodes = sorted([n for n in node_usage_history.keys() if n != 0])
     # 转换为矩阵方便计算
@@ -216,7 +222,7 @@ def inference():
     plt.savefig('node_utilization_summary.png', dpi=300)
     plt.show()
     print("图表已保存为 node_utilization_summary.png")
-'''
+
 
     # -------------------------------------------------------
     #改进方案: 局部放大折线图 (Zoom-in Snapshot)
